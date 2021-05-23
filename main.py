@@ -10,39 +10,40 @@ from models.Sentence_Corrector import Sentence_Corrector
 from nltk.tokenize import sent_tokenize
 
 corpus = get_reuters_files()
-#corpus = normalize_corpus(corpus)
+# corpus = normalize_corpus(corpus)
 # print(corpus)
 corpus = sent_tokenize(corpus)
 # print(corpus)
+given_word = 'the'
 
 uniformLangModel = UniformLanguageModel(corpus)
 uniformLangModel.train(corpus)
-uniform_score = uniformLangModel.score('i')
+uniform_score = uniformLangModel.score(given_word)
 print('UniformLanguageModel: ', uniform_score)
 
 unigramLanguageModel = UnigramLanguageModel(corpus)
 unigramLanguageModel.train(corpus)
-unigram_score = unigramLanguageModel.score('i')
+unigram_score = unigramLanguageModel.score(given_word)
 print('UnigramLanguageModel:', unigram_score)
 
 laplaceBigram = LaplaceBigramLanguageModel(corpus)
 laplaceBigram.train(corpus)
-laplaceBigram_score = laplaceBigram.score('i')
+laplaceBigram_score = laplaceBigram.score(given_word)
 print('LaplaceBigramLanguageModel:', laplaceBigram_score)
 
 laplaceUnigramLanguageModel = LaplaceUnigramLanguageModel(corpus)
 laplaceUnigramLanguageModel.train(corpus)
-laplaceUnigramLanguageModel_score = laplaceUnigramLanguageModel.score('i')
+laplaceUnigramLanguageModel_score = laplaceUnigramLanguageModel.score(given_word)
 print('LaplaceUnigramLanguageModel:', laplaceUnigramLanguageModel_score)
 
 stupidBackoffLanguageModel = StupidBackoffLanguageModel(corpus)
 stupidBackoffLanguageModel.train(corpus)
-stupidBackoffLanguageModel_score = stupidBackoffLanguageModel.score('i')
+stupidBackoffLanguageModel_score = stupidBackoffLanguageModel.score(given_word)
 print('StupidBackoffLanguageModel:', stupidBackoffLanguageModel_score)
 
 customLanguageModel = CustomLanguageModel(corpus)
 customLanguageModel.train(corpus)
-customLanguageModel_score = customLanguageModel.score('i')
+customLanguageModel_score = customLanguageModel.score(given_word)
 print('CustomLanguageModel:', customLanguageModel_score)
 
 spellCorrect = Sentence_Corrector()
