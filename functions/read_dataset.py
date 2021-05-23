@@ -1,10 +1,16 @@
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, dirname, abspath
+import urllib.request
+import configparser
+
+config = configparser.RawConfigParser()
+config.read('ConfigFile.properties')
+
+d = dirname(dirname(abspath(__file__)))
 
 
 def get_reuters_files():
-    # TODO: replace path
-    mypath = 'C:/Users/mverros/Desktop/archive/python_projects/npl/nlp_language_model/dataset/'
+    mypath = d + '\\dataset\\'
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
     quote = ''
@@ -15,7 +21,13 @@ def get_reuters_files():
 
 
 def get_test_file(file_name):
-    # TODO: replace path
-    mypath = 'C:/Users/mverros/Desktop/archive/python_projects/npl/nlp_language_model/tests/files/' + file_name + '.txt'
+    mypath = d + '\\tests\\files' + file_name + '.txt'
     f = open(mypath, "r")
     return f.read()
+
+
+def read_norvig_dataset():
+    corpus = ''
+    for line in urllib.request.urlopen(config.get('URLSECTION', 'url.norvig')):
+        corpus += line.decode('utf-8')
+    return corpus
